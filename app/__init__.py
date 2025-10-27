@@ -1,8 +1,13 @@
 # app/__init__.py
 import os
+from dotenv import load_dotenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+
+# Load environment variables early so create_app() has access to them when
+# the module is imported by WSGI servers (e.g. gunicorn importing `app`).
+load_dotenv()
 
 # Initialize extensions outside of the function
 db = SQLAlchemy()
@@ -29,3 +34,10 @@ def create_app():
     # ... (You can define your error handlers here or in a separate file)
 
     return app
+
+
+# Expose a package-level WSGI application so processes that expect a top-level
+# ``app`` attribute on the ``app`` package (for example, `gunicorn app:app`)
+# can import and run the application directly.
+# Keep create_app() available for programmatic usage (tests, CLI, etc.).
+app = create_app()

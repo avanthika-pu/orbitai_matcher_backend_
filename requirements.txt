@@ -3,3 +3,4 @@ Flask-CORS
 Flask-SQLAlchemy
 gunicorn  # The production server
 psycopg2-binary  # Or another database driver (e.g., mysql-connector-python)
+python-dotenv
